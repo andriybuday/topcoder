@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SRM 144 DIV 2/SRM 144 DIV 2.iml" filepath="$PROJECT_DIR$/SRM 144 DIV 2/SRM 144 DIV 2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SRM 145 DIV 2/SRM 145 DIV 2.iml" filepath="$PROJECT_DIR$/SRM 145 DIV 2/SRM 145 DIV 2.iml" />
       <module fileurl="file://$PROJECT_DIR$/topcoder.iml" filepath="$PROJECT_DIR$/topcoder.iml" />
     </modules>
   </component>
