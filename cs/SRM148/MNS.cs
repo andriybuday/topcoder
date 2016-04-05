@@ -7,15 +7,55 @@ using System.Collections.Generic;
 
 public class MNS
 {
-
-    public bool IsMagicMatrix(int[] a)
+    //Members of vals must be distinct
+    //Based on C++ next_permutation function
+    public bool NextPermutation(int[] vals)
     {
-        var r1 = a[0] + a[1] + a[2];
-        var r2 = a[3] + a[4] + a[5];
-        var r3 = a[6] + a[7] + a[8];
-        var c1 = a[0] + a[3] + a[6];
-        var c2 = a[1] + a[4] + a[7];
-        var c3 = a[2] + a[5] + a[8];
+        int i = vals.Length - 1;
+        while (true)
+        {
+            int ii = i;
+            i--;
+            if (vals[i] < vals[ii])
+            {
+                int j = vals.Length;
+                while (vals[i] >= vals[--j]) ;
+                int temp = vals[i];  //Swap
+                vals[i] = vals[j];
+                vals[j] = temp;
+                int begin = ii, end = vals.Length - 1;
+                while (end > begin)
+                {
+                    int stemp = vals[end];   //Swap
+                    vals[end] = vals[begin];
+                    vals[begin] = stemp;
+                    end--; begin++;
+                }
+                return true;
+            }
+            else if (vals[i] == vals[0])
+            {
+                int begin = 0, end = vals.Length - 1;
+                while (end > begin)
+                {
+                    int stemp = vals[end];   //Swap
+                    vals[end] = vals[begin];
+                    vals[begin] = stemp;
+                    end--; begin++;
+                }
+                return false;
+            }
+        }
+    }
+
+    public bool IsMagicMatrix(int[] a, int[] i)
+    {
+        var r1 = a[i[0]] + a[i[1]] + a[i[2]];
+        var r2 = a[i[3]] + a[i[4]] + a[i[5]];
+        var r3 = a[i[6]] + a[i[7]] + a[i[8]];
+        var c1 = a[i[0]] + a[i[3]] + a[i[6]];
+        var c2 = a[i[1]] + a[i[4]] + a[i[7]];
+        var c3 = a[i[2]] + a[i[5]] + a[i[8]];
         return (r1 == r2 && r2 == r3 && r3 == c1 && c1 == c2 && c2 == c3);
     }
 
@@ -34,27 +74,23 @@ public class MNS
     {
         var numCounter = new int[10];
         foreach (var n in numbers)
+        {
             numCounter[n]++;
+        }
         int div = 1;
         foreach (var nc in numCounter)
         {
             div *= Factorial(nc);
         }
-        var numbersCopy = numbers.ToArray();
-        int counter = IsMagicMatrix(numbers) ? 1 : 0;
-        int numPerm = Factorial(9);
-        //for each permutation
-        //{
-            if (IsMagicMatrix(permutation.ToArray()))
+        int[] permIndexes = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+        int counter = IsMagicMatrix(numbers, permIndexes) ? 1 : 0;
+        while (NextPermutation(permIndexes))
+        {
+            if (IsMagicMatrix(numbers, permIndexes))
             {
                 counter++;
             }
-        //}
+        }
         return counter / div;
     }
-
 }
-
-
-// Powered by FileEdit
-// Powered by CodeProcessor
