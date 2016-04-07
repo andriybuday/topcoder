@@ -12,35 +12,30 @@ public class Quacking
     public int quack(string s)
     {
         if (s.Length % 5 != 0) return -1;
-        var quack = "quack";
+        var q = new int[5];
         int counter = 0;
-        while(s.Length > 0)
+        for (int i = 0; i < s.Length; i++)
         {
-            var sbDuck = new StringBuilder();
-            var sbOthers = new StringBuilder();
-            var qPos = 0;
-            for (int i = 0; i < s.Length; i++)
-            {
-                if(s[i] == quack[qPos])
-                {
-                    sbDuck.Append(s[i]);
-                    qPos++;
-                    if (qPos > 4) qPos = 0;
-                }
-                else
-                {
-                    sbOthers.Append(s[i]);
-                }
-            }
-            var isDuck = sbDuck.ToString().Length % 5 == 0;
-            if (!isDuck)
+            if (s[i] == 'q') q[0]++;
+            if (s[i] == 'u') q[1]++;
+            if (s[i] == 'a') q[2]++;
+            if (s[i] == 'c') q[3]++;
+            if (s[i] == 'k') q[4]++;
+            if (q[0] < q[1] || q[1] < q[2] || q[2] < q[3] || q[3] < q[4])
             {
                 return -1;
             }
-            s = sbOthers.ToString();
-            counter++;
+            else if (q[0] - q[4] > counter)
+            {
+                // depth
+                counter = q[0] - q[4];
+            }
         }
-        return counter;
+        if (q[0] == q[1] && q[1] == q[2] && q[2] == q[3] && q[3] == q[4])
+        {
+            return counter;
+        }
+        return -1;
     }
 
 // BEGIN CUT HERE
@@ -54,7 +49,6 @@ public class Quacking
             eq(3,(new Quacking()).quack("qqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkk"),10);
             eq(4,(new Quacking()).quack("quqaquuacakcqckkuaquckqauckack"),3);
             eq(5,(new Quacking()).quack("quackqauckquack"),-1);
-            eq(6, (new Quacking()).quack("qqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkkqqqqqqqqqquuuuuuuuuuaaaaaaaaaacccccccccckkkkkkkkkk"), 10);
         } 
         catch(Exception ex)
         {
